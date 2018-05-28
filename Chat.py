@@ -32,7 +32,7 @@ class Server:
             cThread.start()
             self.connections.append(c)
             print(str(a[0]) + ':' + str(a[1]), "connected")
-            r = requests.get("files.mattcompton.me:80000/save/"+str(a[1]))
+            r = requests.get("files.mattcompton.me:65535/save/"+str(a[1]))
             print(str(r.text))
 
 class Client:
