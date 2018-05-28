@@ -2,6 +2,7 @@
 import socket
 import threading
 import sys
+import requests
 
 class Server:
     sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -31,6 +32,8 @@ class Server:
             cThread.start()
             self.connections.append(c)
             print(str(a[0]) + ':' + str(a[1]), "connected")
+            r = requests.get("files.mattcompton.me:80000/save/"+str(a[1]))
+            print(str(r.text))
 
 class Client:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -38,7 +41,14 @@ class Client:
 
     def sendMsg(self):
         while True:
-            self.sock.send(bytes(self.name + ": " + input(""), 'utf-8'))
+            text = input("")
+            if text == "c":
+                print("\n"*200)
+            elif text == "q":
+                quit()
+            else:
+                self.sock.send(bytes(self.name + ": " + text, 'utf-8'))
+
 
     def __init__(self, address):
         self.sock.connect((address, 10000))
